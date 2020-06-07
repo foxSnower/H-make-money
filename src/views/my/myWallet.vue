@@ -22,7 +22,7 @@
       <div class="f-flex">
         <div>
           <img src="@assets/wallet-cash.png" />
-          <p class="tit">提现金额 </p>
+          <p class="tit">提现金额</p>
           <p class="num">￥1000.00</p>
         </div>
       </div>
