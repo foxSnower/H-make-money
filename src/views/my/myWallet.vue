@@ -15,7 +15,7 @@
       <div class="f-flex">
         <div>
           <img src="@assets/wallet-order.png" />
-          <p class="tit">购单总额</p>
+          <p class="tit">购单总额 1</p>
           <p class="num">￥1000.00</p>
         </div>
       </div>
