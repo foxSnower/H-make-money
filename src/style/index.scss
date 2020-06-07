@@ -1,0 +1,230 @@
+
+// @import "./animation.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+body{
+  color:#fff;
+  font-size: 14px;
+  background: linear-gradient(#191D26,#232730);
+  font-family:'Microsoft YaHei,SimSun';;
+}
+.mint-header,.mint-tabbar {
+  background-color: #191D26;
+}
+.btn {
+  padding: 10px 15px;
+  // background-color: #fff;
+  /deep/ .mint-button {
+    width: 100%;
+    border-radius: 50px;
+    background: linear-gradient(to right, #53CEF8, #38B1F1);
+    height: 52px;
+    .mint-button-text {
+      color: #fff;
+    }
+  }
+}
+.mint-cell,.mint-cell-wrapper,.mint-cell:last-child{
+  background-color: transparent;
+  background-image:none;
+}
+.mint-cell-wrapper{
+  border-bottom: 1px solid #3A3C47;
+   padding: 0;
+}
+.mint-header.is-fixed{
+  border-bottom: 1px solid #3A3C47;
+}
+.mint-header-title{
+ font-size: 18px;
+}
+//个性表单
+.field{
+  margin: 20px;
+  .filed-tip{
+    font-size: 12px;
+    margin-left: 75px;
+  }
+  /deep/ .mint-cell-value{
+    position: relative;
+    border: 2px solid;
+    border-image: linear-gradient(to right, #53CEF8, #38B1F1) 10 10;
+    clip-path: inset(0 round 4px);
+    padding: 4px;
+    margin-left: 5px;
+  }
+  /deep/ .mint-cell-title{
+    width: 70px;
+  }
+  /deep/ .mint-cell-wrapper{
+    border:none;
+  }
+  input{
+    text-align: center;
+  }
+  input::-webkit-input-placeholder{
+    color:#5E5E5E;
+    font-size: 12px;
+  }
+}
+input{
+  background-color: transparent;
+  color: #fff;
+}
+input::-webkit-input-placeholder{
+  color:#5E5E5E;
+}
+.m-block{
+  padding-top: 40px;
+  position: relative;
+
+}
+.f-flex-box{
+  display: flex;
+  text-align: center;
+}
+.f-flex{
+  flex:1
+}
+
+.allow-right::after,
+.allow-down::after
+ {
+  border: solid 2px #c8c8cd;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  content: " ";
+  top: 50%;
+  right: 20px;
+  position: absolute;
+  width: 5px;
+  height: 5px;
+}
+.allow-right::after{
+  transform: translateY(-50%) rotate(45deg);
+}
+
+// body {
+//   font-family: "microsoft yahei,HanHei SC,PingHei,PingFang SC,STHeitiSC-Light,Helvetica Neue,Helvetica,Arial,sans-serif";
+//   font-size: 14px;
+//   overflow-x: hidden;
+//   color:#333;
+//   background-color: #f5f5f5;
+// }
+// img{
+//   width: inherit;
+//   height:inherit;
+// }
+// i{
+//   font-style: normal;
+// }
+// .iconfont{
+//  font-size: 12px;
+// }
+// .mint-header .mint-header-title{
+//   height: 40px;
+//   line-height: 40px;
+// }
+
+// .allow-down::after {
+//   transform: translateY(-50%) rotate(135deg);
+// }
+// /**
+// * 响应式设计
+// */
+// .f-flex{
+//   display: flex;
+// }
+// .f-clear{
+//   overflow: hidden;
+//   &:before,
+//   &:after{
+//    content:'';
+//    clear: both;
+//   }
+// }
+// .f-item1 {
+//   width: 100%;
+// }
+
+// .f-item2 {
+//   width: 50%;
+// }
+
+// .f-item3 {
+//   width: 33.3%;
+// }
+
+// .f-item {
+//   width: 25%;
+// }
+
+// // @media screen and (max-width: 1920px) {
+// //   .f-item {
+// //     width: 25%;
+// //   }
+
+// //   .f-item2 {
+// //     width: 50%;
+// //   }
+
+// //   .f-item3 {
+// //     width: 33.3%;
+// //   }
+// // }
+
+// // @media screen and (max-width: 1640px) {
+
+// //   .f-item,
+// //   .f-item3,
+// //     {
+// //     width: 33.3%;
+// //   }
+// // }
+
+// // @media screen and (max-width: 1300px) {
+
+// //   .f-item,
+// //   .f-item2,
+// //   .f-item3 {
+// //     width: 50%;
+// //   }
+// // }
+
+// // @media screen and (max-width: 800px) {
+
+// //   .f-item,
+// //   .f-item2,
+// //   .f-item3 {
+// //     width: 100%;
+// //   }
+// // }
+
+
+// /**
+//  * 滚动条修饰
+//  */
+// //  ::-webkit-scrollbar {
+// //   width: 5px;
+// //   height: 5px;
+// // }
+
+// // ::-webkit-scrollbar-track,
+// // ::-webkit-scrollbar-corner {
+// //   background-color: #f2f2f2;
+// // }
+
+// // ::-webkit-scrollbar-thumb {
+// //   border-radius: 0;
+// //   background-color: rgba(0, 0, 0, 0.1);
+// // }
+
+// // ::-webkit-scrollbar-track,
+// // ::-webkit-scrollbar-corner {
+// //   background-color: #f2f2f2;
+// // }
