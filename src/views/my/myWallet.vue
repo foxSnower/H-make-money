@@ -8,14 +8,14 @@
       <img src="@assets/wallet-income.png" />
       <div class="text">
         <p class="tit">总收入</p>
-        <p class="num">￥1000.00</p>
+        <p class="num">￥{{data.studyCoin}}</p>
       </div>
     </div>
     <div class="f-flex-box">
       <div class="f-flex">
         <div>
           <img src="@assets/wallet-order.png" />
-          <p class="tit">购单总额 1</p>
+          <p class="tit">购单总额</p>
           <p class="num">￥1000.00</p>
         </div>
       </div>
@@ -32,14 +32,14 @@
         <div>
           <img src="@assets/wallet-trends.png" />
           <p class="tit">动态金额</p>
-          <p class="num">￥500.00</p>
+          <p class="num">￥{{data.dynamicCoin}}</p>
         </div>
       </div>
       <div class="f-flex">
         <div>
           <img src="@assets/wallet-static.png" />
           <p class="tit">静态金额</p>
-          <p class="num">￥200.00</p>
+          <p class="num">￥{{data.staticCoin}}</p>
         </div>
       </div>
     </div>
@@ -48,7 +48,22 @@
 
 <script>
 export default {
-  components: {}
+  data() {
+    return {
+      data: {}
+    };
+  },
+  components: {},
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      this.$api.userwallet({}).then(res => {
+        this.data = res.data;
+      });
+    }
+  }
 };
 </script>
 
@@ -84,13 +99,13 @@ export default {
   margin: 10px;
   border-radius: 10px;
   background: linear-gradient(to left, #282e3a, #313746);
-  &:first-child{
-      margin-left: 0;
+  &:first-child {
+    margin-left: 0;
   }
-   &:last-child{
-      margin-right: 0;
+  &:last-child {
+    margin-right: 0;
   }
- img {
+  img {
     width: 36px;
     height: 36px;
   }

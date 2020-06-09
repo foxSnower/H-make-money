@@ -11,7 +11,8 @@ const http = axios.create({
     // 'app': Vue.prototype.$GLOBAL.APP,
     // 'X-Forwarded-For': '127.0.0.1',
     'X-Requested-With': 'XMLHttpRequest',
-    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Type': 'application/json; charset=utf-8',
+    'responseType':'arraybuffer'
   },
 })
 
@@ -65,16 +66,10 @@ const tokenTime = Vue.prototype.$GLOBAL.TOKENTIME;
 http.interceptors.request.use(async request => {
   //显示loading
   store.commit('loading', true);
-  //统一为接口增加isEnglish参数
-  if (request.method == 'get') {
-    if (request.params.isEnglish === undefined) {
-      if (store.state.app.isEnglish == 0) request.params.isEnglish = 0;
-      if (store.state.app.isEnglish == 1) request.params.isEnglish = 1;
-    }
-  }
   //添加 Authorization
   switch (request.url) {
     // 不需要任何Authorization的API
+    case '/secret/register':
     case '/sso/login':
     case '/home/content':
     case '/product/getProduct':
@@ -88,7 +83,7 @@ http.interceptors.request.use(async request => {
       if (tokenHead == null || token == null) {
         router.push('/login');
       } else {
-        request.headers['Authorization'] = tokenHead + token;
+        request.headers['Authorization'] = tokenHead +' ' + token;
       }
       return request
       break;
@@ -103,16 +98,23 @@ http.interceptors.request.use(async request => {
 http.interceptors.response.use(res => {
   //隐藏 loading
   store.commit('loading', false);
-  if (res.data.code) {
-    if (res.data.code === 200) {
-      return res.data
-    } else {
-      Toast(res.data.message);
-      return Promise.reject(res.data.code)
-    }
-  } else {
-    return Promise.reject(null)
+  console.log(res)
+  if (res.data.error_code != '0') {
+    Toast(res.data.error_msg);
+    return res.data
+  }else{
+    return res.data
   }
+  // if (res.data.code) {
+  //   if (res.data.code === 200) {
+  //     return res.data
+  //   } else {
+  //     Toast(res.data.message);
+  //     return Promise.reject(res.data.code)
+  //   }
+  // } else {
+  //   return Promise.reject(null)
+  // }
 }, err => {
   store.commit('loading', false);
   let response = err.response;

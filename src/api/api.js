@@ -71,8 +71,20 @@ const comAPI = (method, url, params) => {
 }
 
 const api = {
+  //注册
+  register(params) { return comAPI('post', system + '/secret/register', params) },
   //登录
-  login(params) { return comAPI('post', system + '/sso/login', params) },
+  login(params) { return comAPI('post', system + '/secret/token', params) },
+  //获取验证码
+  verifycode(params) { return comAPI('get', system + '/secret/verifycode', params) },
+  //修改密码
+  changepwd(params) { return comAPI('post', system + '/secret/changepwd', params) },
+  //获取当前用户信息
+  selfinfo(params) { return comAPI('post', system + '/secret/selfinfo', params) },
+  //用户钱包
+  userwallet(params) { return comAPI('post', system + '/wallet/userwallet', params) },
+ 
+
   //首页内容页信息展示
   homeContent(params) { return comAPI('get', system + '/home/content', params) },
   //商品信息展示
@@ -124,7 +136,7 @@ const api = {
   //会员收藏
   collection(params) { return comAPI('post', system + '/member/collection/addProduct', params) },
   //获取购物车的数据
-  getCartCount(params){ return comAPI('get',system+'/cart/getCartCount',params) },
+  getCartCount(params) { return comAPI('get', system + '/cart/getCartCount', params) },
 
 }
 

@@ -26,12 +26,12 @@
       </mt-cell>
     </div>
     <div class="cell-box">
-      <mt-cell title="修改密码" is-link @click.native="$router.push('/modifyPassword')">
+      <mt-cell title="修改密码" is-link @click.native="$router.push('/modifyPasswordFirst')">
         <img slot="icon" src="@assets/modify-password.png" width="24" height="24" />
       </mt-cell>
     </div>
     <div class="btn">
-      <mt-button @click.native>退出登录</mt-button>
+      <mt-button @click.native="$router.push('/login')">退出登录</mt-button>
     </div>
     <Footer curPage="我的"></Footer>
   </div>

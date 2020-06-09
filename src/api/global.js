@@ -1,7 +1,7 @@
 
 import Vue from 'vue'
 
-const DEV = 'http://106.12.108.154:8085';
+const DEV = 'http://154.221.25.37:8077/api/v1.0/';
 // const DEV = 'http://192.168.3.4:8085';
 const SIT = 'http://172.16.200.112:30111';
 const UAT = 'http://47.106.46.65:30111';

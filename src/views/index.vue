@@ -7,13 +7,13 @@
       <img src="@assets/banner.png" />
     </div>
     <div class="f-flex-box">
-      <div class="f-flex" @click="$router.push('/buyRecord')">
+      <div class="f-flex" @click="$router.push('/buy')">
         <div>
           <img src="@assets/buy.png" />
           <p>买入</p>
         </div>
       </div>
-      <div class="f-flex" @click="$router.push('/buyRecord')">
+      <div class="f-flex" @click="$router.push('/sell')">
         <div>
           <img src="@assets/sell.png" />
           <p>卖出</p>

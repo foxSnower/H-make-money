@@ -5,19 +5,19 @@
     </div>
     <div class="login-box">
       <div class="filed" @keyup.enter="login">
-        <mt-field placeholder="用户名/邮箱/手机号" v-model.trim="username"></mt-field>
+        <mt-field placeholder="用户名/邮箱/手机号" v-model.trim="mobilePhone"></mt-field>
         <mt-field placeholder="请输入密码" type="password" v-model.trim="password">
           <span class="iconfont icondizhi"></span>
           <span class="f-password">忘记密码</span>
         </mt-field>
-        <mt-field placeholder="请输入验证码" v-model="captcha">
-          <img src="@assets/sell-record.png" height="45px" width="100px" />
+        <mt-field placeholder="请输入验证码" v-model="validCode">
+          <img :src="validCodeImg" alt="图片加载失败" height="37px" width="100px" @click="changeImg" />
         </mt-field>
       </div>
       <div class="btn">
         <mt-button :disabled="isDisabled" @click.native="login">登录</mt-button>
       </div>
-      <div class="b-text">新用户注册</div>
+      <div class="b-text" @click="$router.push('./register')">新用户注册</div>
     </div>
   </div>
 </template>
@@ -26,30 +26,47 @@
 export default {
   data() {
     return {
-      isDisabled:true,
-      username: "",
       password: "",
-      telephone: "",
-      captcha: "",
-      type: 2
+      mobilePhone: "",
+      validCode: "",
+
+      validCodeImg: ""
     };
   },
   components: {},
+  mounted() {
+    this.changeImg();
+  },
   methods: {
+    changeImg() {
+      let num = Math.ceil(Math.random() * 100);
+      this.validCodeImg = this.$GLOBAL.BASE_URL + "secret/verifycode?num="+num;
+    },
     login() {
-      // this.$api
-      //   .login({
-      //     username: this.username,
-      //     password: this.password,
-      //     telephone: this.telephone,
-      //     authCode: this.authCode,
-      //     type: this.type
-      //   })
-      //   .then(res => {
-      //     this.$cookie.set("tokenHead", res.data.tokenHead);
-      //     this.$cookie.set("token", res.data.token);
-      //     this.$router.push("/home");
-      //   });
+      this.$api
+        .login({
+          password: this.password,
+          mobilePhone: this.mobilePhone,
+          validCode: this.validCode
+        })
+        .then(res => {
+          this.$cookie.set("tokenHead", res.data.type);
+          this.$cookie.set("token", res.data.token);
+          this.$router.push("/index");
+        });
+    }
+  },
+  computed: {
+    isDisabled() {
+      if (
+        this.password != "" &&
+        this.mobilePhone != "" &&
+        this.validCode != ""
+      ) {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 };

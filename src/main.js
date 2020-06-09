@@ -13,6 +13,7 @@ import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 Vue.use(MintUI)
 
+
 import echarts from 'echarts';
 Vue.prototype.$echarts = echarts;
 
