@@ -2,21 +2,35 @@
   <div class="picker-box">
     <div class="hd">
       <span class="cancel" @click="$emit('update:showPicker', false)">取消</span>
-      <span class="ok">确定</span>
+      <span class="ok" @click="ok">确定</span>
     </div>
-    <mt-picker :itemHeight="40" :visibleItemCount="7" :slots="slots"></mt-picker>
+    <mt-picker :itemHeight="40" :visibleItemCount="7" :slots="slots" valueKey="textVal" @change="change"></mt-picker>
   </div>
 </template>
 
 <script>
 export default {
+  data(){
+    return {
+      curVal:{}
+    }
+  },
   props: {
     slots: {
       type: Array,
       default: []
     }
   },
-  components: {}
+  components: {},
+  methods:{
+    change(picker, values){
+      this.curVal = values[0];
+    },
+    ok(){
+      this.$emit('update:curVal',this.curVal);
+      this.$emit('update:showPicker', false)
+    }
+  }
 };
 </script>
 

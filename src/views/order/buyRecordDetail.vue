@@ -22,16 +22,37 @@
       <mt-cell title="银行地址" value="东莞工行"></mt-cell>
     </div>
     <div class="btn">
-        <mt-button @click.native>确认买入</mt-button>
-      </div>
+      <mt-button @click.native>确认买入</mt-button>
+    </div>
     <noneImg v-if="false"></noneImg>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      orderDetail: null
+    };
+  },
   components: {
     noneImg: () => import("@components/noneImg")
+  },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      this.$api
+        .buyorderdetail({
+          parentId: "cd5c38ba-e8d9-4243-bc8b-440d9c912bcb"
+        })
+        .then(res => {
+          if (res.error_code == "0") {
+            this.orderDetail = res.data;
+          }
+        });
+    }
   }
 };
 </script>
@@ -54,7 +75,6 @@ export default {
   /deep/ .mint-cell-wrapper {
     margin: 0;
   }
-
 }
 .btn {
   margin: 30px 50px;

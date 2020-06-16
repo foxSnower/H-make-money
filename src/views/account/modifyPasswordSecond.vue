@@ -44,10 +44,7 @@ export default {
         })
         .then(res => {
           if (res.error_code == "0") {
-            this.$toast("恭喜修改成功~");
-            setTimeout(function() {
-              that.$router.push("./my");
-            }, 1000);
+              that.$router.replace("./modifyStatus");
           }
         });
     }

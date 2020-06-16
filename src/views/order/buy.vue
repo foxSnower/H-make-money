@@ -8,9 +8,9 @@
       <div class="title">买入</div>
       <div class="filed" @click="showPicker=true">
         <div class="f-flex-box">
-          <div class="f-flex tit">墨：3000元</div>
-          <div class="f-flex num">
-            3学点
+          <div class="f-flex tit">{{curValTit}}</div>
+          <div class="num">
+            {{curValNum}}
             <i class="allow-down"></i>
           </div>
         </div>
@@ -20,11 +20,11 @@
         <div class="cont">排单每1000元需消耗1个学点数，您当前学点数数量为:0</div>
       </div>
       <div class="btn">
-        <mt-button @click.native="$router.push('./buyRecordDetail')">确认买入</mt-button>
+        <mt-button :disabled="isDisabled" @click.native="buy">确认买入</mt-button>
       </div>
     </div>
     <transition name="slide-fade">
-      <Picker v-if="showPicker" :slots="slots" :showPicker.sync="showPicker"></Picker>
+      <Picker v-if="showPicker" :slots="slots" :curVal.sync="curVal" :showPicker.sync="showPicker"></Picker>
     </transition>
   </div>
 </template>
@@ -34,16 +34,12 @@ export default {
   data() {
     return {
       showPicker: false,
+      curVal: null,
       slots: [
         {
           flex: 1,
-          values: [
-            "笔：1000元 1学点",
-            "墨：3000元 3学点",
-            "纸：5000元 5学点",
-            "砚：10000元 10学点"
-          ],
-          className: "slot3"
+          values: [],
+          className: "slot1"
         }
       ]
     };
@@ -51,30 +47,79 @@ export default {
   components: {
     Picker: () => import("@components/picker")
   },
+  watch: {
+    curVal(oldVal, newVal) {
+      console.log(oldVal, newVal);
+    }
+  },
+  mounted() {
+    this.getData();
+  },
   methods: {
-    buy() {
+    getData() {
       let that = this;
-      if (this.newPassword != this.newPassword2) {
-        this.$toast("两次密码输入不一致！");
-        return false;
-      }
+      this.$api.products({}).then(res => {
+        if (res.data != undefined) {
+          let list = [];
+          let text = "";
+          let status = "";
+          list = res.data;
+          list.forEach(x => {
+            if (x.status == "未开放") {
+              status = "(暂未开放)";
+            } else {
+              status = "";
+            }
+            text = x.productName + " " + x.studyCoinCost + "学点" + status;
+            x.textVal = text;
+          });
+          this.slots[0].values = list;
+        }
+      });
+    },
+    buy() {
       this.$api
-        .changepwd({
-          newPassword: this.newPassword,
-          oldPassword: this.$route.query.oldPassword,
-          l2Password: this.$route.query.l2Password
+        .tobuy({
+          productId: this.curVal.id
         })
         .then(res => {
           if (res.error_code == "0") {
-            this.$toast("恭喜修改成功~");
-            setTimeout(function() {
-              that.$router.push("./my");
-            }, 1000);
+            this.$router.replace("./buyRecord");
           }
         });
     }
   },
-  computed: {}
+  computed: {
+    curValTit() {
+      if (this.curVal != null) {
+        let curVal = this.curVal.textVal;
+        console.log(curVal);
+        return curVal.split(" ")[0];
+      } else {
+        return "";
+      }
+    },
+    curValNum() {
+      if (this.curVal != null) {
+        let curVal = this.curVal.textVal;
+        return curVal.split(" ")[1];
+      } else {
+        return "";
+      }
+    },
+    isDisabled() {
+      let curVal = this.curVal;
+      if (this.curValTit != "" && this.curValNum != "") {
+        if (curVal.status == "未开放") {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    }
+  }
 };
 </script>
 
@@ -83,6 +128,10 @@ export default {
   margin: 30px;
   .title {
     font-size: 24px;
+  }
+  .f-flex-box {
+    height: 26px;
+    line-height: 26px;
   }
   .filed-box {
     margin-top: 10px;
@@ -128,5 +177,4 @@ export default {
 .btn {
   margin-top: 50px;
 }
-
 </style>

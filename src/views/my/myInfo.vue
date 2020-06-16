@@ -1,27 +1,46 @@
 <template>
-  <div class="m-block">
+  <div class="m-block" v-if="loading">
     <mt-header fixed :title="$route.meta.title">
       <mt-button slot="left" icon="back" @click="$router.go(-1)"></mt-button>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     <div class="cell-box">
-      <mt-cell title="头像" is-link @click.native>
+      <mt-cell title="头像" is-link>
         <span class="img">
           <img src="@assets/hot-sell.png" />
         </span>
       </mt-cell>
-      <mt-cell title="账号" is-link value="18825719951" @click.native></mt-cell>
-      <mt-cell title="电话" value="18825719951"></mt-cell>
-      <mt-cell title="微信" value="vxin74123"></mt-cell>
-      <mt-cell title="支付宝" value="18825719951"></mt-cell>
-      <mt-cell title="银行卡" value="62220244454679734646464"></mt-cell>
+      <mt-cell title="账号" is-link :value="info.mobile"></mt-cell>
+      <mt-cell title="电话" :value="info.mobile"></mt-cell>
+      <mt-cell title="微信" :value="info.wechat"></mt-cell>
+      <mt-cell title="支付宝" :value="info.alipay"></mt-cell>
+      <mt-cell title="银行卡" :value="info.bankCardNo"></mt-cell>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  components: {}
+  data() {
+    return {
+      loading: false,
+      info: {}
+    };
+  },
+  components: {},
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      this.$api.selfinfo({}).then(res => {
+        if (res.error_code == "0") {
+          this.info = res.data;
+          this.loading = true;
+        }
+      });
+    }
+  }
 };
 </script>
 

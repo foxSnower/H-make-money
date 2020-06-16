@@ -83,7 +83,24 @@ const api = {
   selfinfo(params) { return comAPI('post', system + '/secret/selfinfo', params) },
   //用户钱包
   userwallet(params) { return comAPI('post', system + '/wallet/userwallet', params) },
- 
+  //获取当前登录用户信息
+  selfinfo(params) { return comAPI('post', system + '/secret/selfinfo', params) },
+
+  //产品列表
+  products(params) { return comAPI('get', system + '/product/products', params) },
+  //买入申请
+  tobuy(params) { return comAPI('post', system + '/buy/tobuyorder', params) },
+  //买入信息记录
+  buyorder(params) { return comAPI('post', system + '/buy/buyorderbyuserid', params) },
+  //买入信息记录详情
+  buyorderdetail(params) { return comAPI('post', system + '/buy/buyorderdetailbyparentid', params) },
+  //卖出申请
+  tosell(params) { return comAPI('post', system + '/sell/matching', params) },
+  //卖出信息记录
+  sellorder(params) { return comAPI('post', system + '/sell/sellorderbyuserid', params) },
+  //卖出信息记录详情
+  sellorderdetail(params) { return comAPI('post', system + '/sell/sellorderdetailbyparentid', params) },
+
 
   //首页内容页信息展示
   homeContent(params) { return comAPI('get', system + '/home/content', params) },

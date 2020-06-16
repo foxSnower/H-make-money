@@ -8,6 +8,9 @@ import router from './router'
 import VueCookie from 'vue-cookie'
 Vue.use(VueCookie);
 
+import VueClipboard from 'vue-clipboard2';
+Vue.use(VueClipboard);
+
 //引入MintUI组件
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'

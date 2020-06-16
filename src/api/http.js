@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Toast } from 'mint-ui';
 
 const http = axios.create({
-  timeout: 1000 * 5,
+  timeout: 1000 * 10,
   baseURL: Vue.prototype.$GLOBAL.BASE_URL,
   headers: {
     // 'app': Vue.prototype.$GLOBAL.APP,

@@ -5,8 +5,8 @@
     </mt-header>
     <div class="my-hd" @click="$router.push('/myInfo')">
       <img src="@assets/hot-sell.png" />
-      <p class="hd-title">18825719951</p>
-      <p class="hd-subtitle">微信号:vxin74123</p>
+      <p class="hd-title">{{info.mobile}}</p>
+      <p class="hd-subtitle">微信号:{{info.wechat}}</p>
       <i class="allow-right"></i>
     </div>
     <div class="cell-box">
@@ -41,7 +41,7 @@
 export default {
   data() {
     return {
-      memberInfo: {}
+      info: {}
     };
   },
   components: {
@@ -52,11 +52,13 @@ export default {
   },
   methods: {
     getData() {
-      // this.$api.memberInfo({}).then(res => {
-      //   this.memberInfo = res.data;
-      // });
+     this.$api.selfinfo({}).then(res=>{
+        if(res.error_code == "0"){
+          this.info =res.data;
+        }
+      })
     }
-  }
+  },
 };
 </script>
 

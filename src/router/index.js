@@ -24,6 +24,8 @@ const router = new Router({
     { path: '/register', meta: { title: '' }, name: 'register', component: () => import('@views/account/register.vue') },
     { path: '/modifyPasswordFirst', meta: { title: '修改密码' }, name: 'modifyPasswordFirst', component: () => import('@views/account/modifyPasswordFirst.vue') },
     { path: '/modifyPasswordSecond', meta: { title: '修改密码' }, name: 'modifyPasswordSecond', component: () => import('@views/account/modifyPasswordSecond.vue') },
+    { path: '/modifyStatus', meta: { title: '修改密码' }, name: 'modifyStatus', component: () => import('@views/account/modifyStatus.vue') },
+    
     { path: '/qrcode', meta: { title: '二维码' }, name: 'qrcode', component: () => import('@views/qrcode/qrcode.vue') },
     { path: '/my', meta: { title: '个人中心' }, name: 'my', component: () => import('@views/my/my.vue') },
     { path: '/myInfo', meta: { title: '个人信息' }, name: 'myInfo', component: () => import('@views/my/myInfo.vue') },
