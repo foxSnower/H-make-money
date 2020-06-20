@@ -1,13 +1,13 @@
 <template>
   <div class="state">
     <mt-header fixed :title="$route.meta.title">
-        <mt-button slot="left" icon="back" @click="$router.go(-1)"></mt-button>
+      <mt-button slot="left" icon="back" @click="$router.push('./my')"></mt-button>
     </mt-header>
-    <div class="box" v-if="false">
+    <div class="box" v-if="showSuccess">
       <img src="@assets/success.png" alt />
       <p>恭喜您转让成功~</p>
     </div>
-    <div class="box">
+    <div class="box" v-else>
       <img src="@assets/fail.png" alt />
       <p>转让失败，请重新转让吧~</p>
     </div>
@@ -16,7 +16,15 @@
 
 <script>
 export default {
-  components: {}
+  data() {
+    return {
+      showSuccess: true
+    };
+  },
+  components: {},
+  mounted() {
+    this.showSuccess = this.$route.query.status == "success" ? true : false;
+  }
 };
 </script>
 

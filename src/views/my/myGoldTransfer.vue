@@ -12,8 +12,8 @@
       </div>
     </div>
     <div class="field">
-      <mt-field label="转出账户:" placeholder="请输入手机号" type="tel" v-model="phone"></mt-field>
-      <mt-field label="输入数量:" placeholder="请输入数字" type="number" v-model="number"></mt-field>
+      <mt-field label="转出账户:" placeholder="请输入转出账户号" type="tel" v-model="toMobile"></mt-field>
+      <mt-field label="输入数量:" placeholder="请输入排单币数量" type="number" v-model="amount"></mt-field>
       <div class="filed-tip">学点币不足</div>
     </div>
     <div class="warn">
@@ -21,7 +21,7 @@
       <div class="cont">请您认真核对转入账户，避免给您造成损失</div>
     </div>
     <div class="btn">
-      <mt-button :disabled="isDisabled" @click.native="$router.push('/myTransferState')">确定转让</mt-button>
+      <mt-button :disabled="isDisabled" @click.native="sure">确定转让</mt-button>
     </div>
     <div class="cell-box">
       <div class="f-flex-box hd">
@@ -29,23 +29,15 @@
         <div class="f-flex">数量</div>
         <div class="f-flex">时间</div>
       </div>
-      <!-- <div class="f-flex-box">
-        <div class="f-flex">13713111203</div>
-        <div class="f-flex">10</div>
-        <div class="time">2020-05-17 18:00</div>
-      </div>
-      <div class="f-flex-box">
-        <div class="f-flex">13713111203</div>
-        <div class="f-flex">10</div>
-        <div class="time">2020-05-17 18:00</div>
-      </div>
-      <div class="f-flex-box">
-        <div class="f-flex">13713111203</div>
-        <div class="f-flex">10</div>
-        <div class="time">2020-05-17 18:00</div>
-      </div>-->
+      <template v-if="recordList.length!=0">
+        <div class="f-flex-box" v-for="x in recordList" :key="x.id">
+          <div class="f-flex">{{x.referUserMobile}}</div>
+          <div class="f-flex">{{x.amount}}</div>
+          <div class="time">{{x.createDate}}</div>
+        </div>
+      </template>
     </div>
-    <div class="none">暂无记录</div>
+    <div class="none" v-if="recordList.length==0">暂无记录</div>
   </div>
 </template>
 
@@ -53,11 +45,48 @@
 export default {
   data() {
     return {
-      phone: 12,
-      number: ""
+      recordList: [],
+      toMobile: "",
+      amount: null
     };
   },
-  components: {}
+  components: {},
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      //获取转让记录
+      this.$api.studycoinexchangerecord({}).then(res => {
+        if (res.error_code == 0) {
+          this.recordList = res.data;
+        }
+      });
+    },
+    sure() {
+      this.$api
+        .studycoinexchange({
+          toMobile: this.toMobile,
+          amount: this.amount
+        })
+        .then(res => {
+          if (res.error_code == 0) {
+            this.$router.replace("./myTransferState?status=success");
+          } else {
+            this.$router.replace("./myTransferState?status=fail");
+          }
+        });
+    }
+  },
+  computed: {
+    isDisabled() {
+      if (this.toMobile != "" && this.amount != null) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
 };
 </script>
 

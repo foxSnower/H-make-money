@@ -83,6 +83,13 @@ const api = {
   selfinfo(params) { return comAPI('post', system + '/secret/selfinfo', params) },
   //用户钱包
   userwallet(params) { return comAPI('post', system + '/wallet/userwallet', params) },
+  //奖金明细
+  usercoinrecord(params) { return comAPI('post', system + '/wallet/usercoinrecord', params) },
+  //学点转让
+  studycoinexchange(params) { return comAPI('post', system + '/wallet/studycoinexchange', params) },
+  //学点转让记录
+  studycoinexchangerecord(params) { return comAPI('post', system + '/wallet/studycoinexchangerecord', params) },
+
   //获取当前登录用户信息
   selfinfo(params) { return comAPI('post', system + '/secret/selfinfo', params) },
 
@@ -90,6 +97,9 @@ const api = {
   products(params) { return comAPI('get', system + '/product/products', params) },
   //买入申请
   tobuy(params) { return comAPI('post', system + '/buy/tobuyorder', params) },
+  //买入确认
+  tobuyordersure(params) { return comAPI('post', system + '/buy/tobuyordersure', params) },
+
   //买入信息记录
   buyorder(params) { return comAPI('post', system + '/buy/buyorderbyuserid', params) },
   //买入信息记录详情

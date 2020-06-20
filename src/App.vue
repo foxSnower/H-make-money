@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="height: 100vh; overflow-x: hidden">
     <router-view />
-    <mt-spinner class="loading" color="#ff2a00" v-show="loading" type="double-bounce"></mt-spinner>
+    <mt-spinner class="loading" color="#2897fe" v-show="loading" type="double-bounce"></mt-spinner>
   </div>
 </template>
 

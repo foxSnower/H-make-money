@@ -1,5 +1,5 @@
 <template>
-  <div class="m-block">
+  <div class="m-block" v-if="!loading">
     <mt-header fixed :title="$route.meta.title">
       <mt-button slot="left" icon="back" @click="$router.go(-1)"></mt-button>
       <mt-button icon="more" slot="right"></mt-button>
@@ -9,7 +9,11 @@
         <div class="hd">
           <span class="tit">参与者：</span>
           <span>{{x.bname}}</span>
-          <span v-if="x.status==1" class="detail" @click="$router.push('./buyRecordDetail')">查看详情</span>
+          <span
+            v-if="x.status==2"
+            class="detail"
+            @click="$router.push('./buyRecordDetail?parentId='+ x.id)"
+          >查看详情</span>
         </div>
         <div class="bd">
           <span class="tit">申请编号：</span>
@@ -38,6 +42,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -62,10 +67,13 @@ export default {
       if (status == 0) {
         return "yellow";
       }
-      if (status == 1) {
+      if (status == 2) {
         return "blue";
       }
     }
+  },
+  computed: {
+    ...mapGetters(["loading"])
   }
 };
 </script>

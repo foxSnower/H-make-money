@@ -1,38 +1,43 @@
 <template>
-  <div class="m-block">
+  <div class="m-block" v-if="!loading">
     <mt-header fixed :title="$route.meta.title">
       <mt-button slot="left" icon="back" @click="$router.go(-1)"></mt-button>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
-    <div class="cell-box">
+    <!-- <div class="cell-box">
       <mt-cell title="买入玩家" value="陈明"></mt-cell>
       <mt-cell title="手机号" value="13713111203"></mt-cell>
       <mt-cell title="推荐人" value="王喜"></mt-cell>
       <mt-cell title="推荐人电话" value="18688912345"></mt-cell>
-    </div>
-    <div class="cell-box">
-      <mt-cell title="卖出玩家" value="陈林"></mt-cell>
-      <mt-cell title="手机号" value="15699899999"></mt-cell>
-      <mt-cell title="推荐人" value="王喜"></mt-cell>
-      <mt-cell title="推荐人电话" value="18688912345"></mt-cell>
-      <mt-cell title="微信" value="18688912345"></mt-cell>
-      <mt-cell title="支付宝" value="18688912345"></mt-cell>
-      <mt-cell title="真实姓名" value="陈林"></mt-cell>
-      <mt-cell title="银行账号" value="62909988777777777"></mt-cell>
-      <mt-cell title="银行地址" value="东莞工行"></mt-cell>
-    </div>
-    <div class="btn">
-      <mt-button @click.native>确认买入</mt-button>
-    </div>
-    <noneImg v-if="false"></noneImg>
+    </div>-->
+    <template v-if="orderList.length!=0">
+      <div class="cell-box" v-for="x in orderList" :key="x.id">
+        <mt-cell title="卖出玩家" :value="x.sname"></mt-cell>
+        <mt-cell title="手机号" :value="x.smobile"></mt-cell>
+        <mt-cell title="推荐人" :value="x.invitename"></mt-cell>
+        <mt-cell title="推荐人电话" :value="x.invitemobile"></mt-cell>
+        <mt-cell title="微信" :value="x.swechat"></mt-cell>
+        <mt-cell title="支付宝" :value="x.sailipay"></mt-cell>
+        <mt-cell title="真实姓名" :value="x.srealName"></mt-cell>
+        <mt-cell title="银行账号" :value="x.sbankCardNo"></mt-cell>
+        <mt-cell title="银行地址" :value="x.sbankName"></mt-cell>
+        <mt-cell title="成交金额" :value="x.amount"></mt-cell>
+        <mt-cell title="成交时间" :value="x.buyDateStr"></mt-cell>
+      </div>
+      <div class="btn" v-if="showBtn">
+        <mt-button @click.native="sureBuy">确认买入</mt-button>
+      </div>
+    </template>
+    <noneImg v-else></noneImg>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      orderDetail: null
+      orderList: []
     };
   },
   components: {
@@ -45,15 +50,35 @@ export default {
     getData() {
       this.$api
         .buyorderdetail({
-          parentId: "cd5c38ba-e8d9-4243-bc8b-440d9c912bcb"
+          parentId: this.$route.query.parentId
         })
         .then(res => {
           if (res.error_code == "0") {
-            this.orderDetail = res.data;
+            this.orderList = res.data;
           }
         });
+    },
+    sureBuy() {
+      this.$api.tobuyordersure({
+        detailId:this.this.$route.query.parentId
+      }).then(res=>{
+        if (res.error_code == "0") {
+            this.orderList = res.data;
+          }
+      })
     }
-  }
+  },
+  computed: {
+    ...mapGetters(["loading"]),
+    showBtn() {
+      let orderList = this.orderList;
+      //是否所有买家都已付款
+      let isB = orderList.every(y => {
+        return y.status == 2;
+      });
+      return !isB;
+    }
+  },
 };
 </script>
 

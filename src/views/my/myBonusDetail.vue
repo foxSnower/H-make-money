@@ -1,29 +1,46 @@
 <template>
-  <div class="m-block">
+  <div class="m-block" v-if="!loading">
     <mt-header fixed :title="$route.meta.title">
       <mt-button slot="left" icon="back" @click="$router.go(-1)"></mt-button>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
-    <div class="cell-box">
-      <mt-cell class="hd" title="收益来自：一级收益"></mt-cell>
-      <mt-cell class="income" title="动态收益" value="20"></mt-cell>
-      <mt-cell title="奖金类型" value="推广"></mt-cell>
-      <mt-cell title="时间" value="2020-05-27 18：00"></mt-cell>
-    </div>
-    <div class="cell-box">
-      <mt-cell class="hd" title="收益来自：一级收益"></mt-cell>
-      <mt-cell class="income" title="动态收益" value="20"></mt-cell>
-      <mt-cell title="奖金类型" value="推广"></mt-cell>
-      <mt-cell title="时间" value="2020-05-27 18：00"></mt-cell>
-    </div>
-    <noneImg v-if="false"></noneImg>
+    <template v-if="recordList.length!=0">
+      <div class="cell-box" v-for="x in recordList" :key="x.id">
+        <mt-cell class="hd" :title="`收益来自：${x.remark}`"></mt-cell>
+        <mt-cell class="income" title="动态收益" :value="x.amount"></mt-cell>
+        <mt-cell title="奖金类型" :value="x.type"></mt-cell>
+        <mt-cell title="时间" :value="x.createDate"></mt-cell>
+      </div>
+    </template>
+    <noneImg v-else></noneImg>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
 export default {
+  data() {
+    return {
+      recordList: []
+    };
+  },
   components: {
-      noneImg: () => import("@components/noneImg")
+    noneImg: () => import("@components/noneImg")
+  },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      this.$api.usercoinrecord({}).then(res => {
+        if (res.error_code == 0) {
+          this.recordList = res.data;
+        }
+      });
+    }
+  },
+  computed: {
+    ...mapGetters(["loading"])
   }
 };
 </script>

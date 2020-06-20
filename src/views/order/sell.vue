@@ -34,7 +34,13 @@
       <div class="filed">
         <div class="f-flex-box">
           <div class="f-flex tit">卖出金额</div>
-          <mt-field class="f-filed" placeholder="请输入数字"  v-model="amount"></mt-field>
+          <mt-field
+            class="f-filed"
+            placeholder="请输入提现金额"
+            v-model="amount"
+            @focus.native.capture="filterAmount(amount)"
+            @blur.native.capture="filterAmount(amount)"
+          ></mt-field>
         </div>
       </div>
       <div class="warn">
@@ -57,8 +63,8 @@
 export default {
   data() {
     return {
-        number:0,
-      wallet: null,
+      amount: null,
+      wallet: {},
       showPicker: false,
       curVal: null,
       slots: [
@@ -85,6 +91,14 @@ export default {
         }
       });
     },
+    filterAmount(amount) {
+      console.log(amount,amount.indexOf("￥"));
+      if (amount.indexOf("￥") > -1) {
+        this.amount = parseFloat(amount.split("￥")[1]);
+      } else {
+        this.amount = "￥" + parseFloat(amount);
+      }
+    },
     buy() {
       this.$api
         .tobuy({
@@ -98,15 +112,6 @@ export default {
     }
   },
   computed: {
-    // amount: {
-    //   get: function () {
-    //      return this.number; //获取的时候直接获取值
-    //   },
-    //   set: function (value) {
-    //      this.number = '￥'+ this.number; //设置的时候变为大写
-    //    }
-    // },
-
     isDisabled() {
       let curVal = this.curVal;
       if (this.curVal != "" && this.curVal != null) {

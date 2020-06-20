@@ -16,14 +16,14 @@
         <div>
           <img src="@assets/wallet-order.png" />
           <p class="tit">购单总额</p>
-          <p class="num">￥1000.00</p>
+          <p class="num">￥{{data.totalBuyOrderAmount}}</p>
         </div>
       </div>
       <div class="f-flex">
         <div>
           <img src="@assets/wallet-cash.png" />
           <p class="tit">提现金额</p>
-          <p class="num">￥1000.00</p>
+          <p class="num">￥{{data.withDrawAmount}}</p>
         </div>
       </div>
     </div>

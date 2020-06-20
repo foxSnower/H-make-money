@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import $U from "../utils";
 //基础数据
 const app = {
@@ -27,4 +28,5 @@ const app = {
   }
 }
 
+Vue.prototype.$loading = app.state.loading;
 export default app
