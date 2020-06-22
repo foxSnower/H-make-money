@@ -8,11 +8,11 @@
       <div class="cell-box" v-for="x in orderList" :key="x.id">
         <div class="hd">
           <span class="tit">参与者：</span>
-          <span>{{x.bname}}</span>
+          <span>{{x.sname}}</span>
           <span
             v-if="x.status==2"
             class="detail"
-            @click="$router.push('./buyRecordDetail?parentId='+ x.id)"
+            @click="$router.push('./sellRecordDetail?parentId='+ x.id)"
           >查看详情</span>
         </div>
         <div class="bd">
@@ -21,11 +21,11 @@
         </div>
         <div class="bd">
           <span class="tit">日期：</span>
-          <span>{{x.orderDate}}</span>
+          <span>{{x.orderDateStr}}</span>
         </div>
         <div class="bd">
           <span class="tit">已配：</span>
-          <span>{{x.buyAmount}} 元</span>
+          <span>{{x.sellAmount}} 元</span>
         </div>
         <div class="bd">
           <span class="tit">匹配状态：</span>
@@ -64,11 +64,10 @@ export default {
       });
     },
     statusColor(status) {
-      if (status == 0) {
-        return "yellow";
-      }
       if (status == 2) {
         return "blue";
+      } else {
+        return "yellow";
       }
     }
   },

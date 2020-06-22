@@ -4,7 +4,7 @@
       <mt-button slot="left" icon="back" @click="$router.go(-1)"></mt-button>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
-    <mt-search v-model="value" placeholder="请输入会员编号">
+    <!-- <mt-search v-model="value" placeholder="请输入会员编号">
       <div class="cell-box">
         <mt-cell class="success" title="编号：" label="18924435345" value="已激活"></mt-cell>
         <mt-cell title="姓名" value="邓在"></mt-cell>
@@ -17,9 +17,12 @@
         <mt-cell title="推荐人数" value="0"></mt-cell>
         <mt-cell title="团队人数" value="0"></mt-cell>
       </div>
-    </mt-search>
-
-    <noneImg v-if="value==''"></noneImg>
+    </mt-search>-->
+    <div class="cell-box">
+      <mt-cell title="推荐人数" :value="info.l1Num"></mt-cell>
+      <mt-cell class="b-none" title="团队人数" :value="info.teamTotal"></mt-cell>
+    </div>
+    <noneImg v-if="info==null"></noneImg>
   </div>
 </template>
 
@@ -27,11 +30,23 @@
 export default {
   data() {
     return {
-      value: ""
+      info: null
     };
   },
   components: {
     noneImg: () => import("@components/noneImg")
+  },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      this.$api.relationnum({}).then(res => {
+        if (res.error_code == "0") {
+          this.info = res.data;
+        }
+      });
+    }
   }
 };
 </script>

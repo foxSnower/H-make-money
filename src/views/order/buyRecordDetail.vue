@@ -1,5 +1,5 @@
 <template>
-  <div class="m-block" v-if="!loading">
+  <div class="m-block">
     <mt-header fixed :title="$route.meta.title">
       <mt-button slot="left" icon="back" @click="$router.go(-1)"></mt-button>
       <mt-button icon="more" slot="right"></mt-button>
@@ -23,9 +23,10 @@
         <mt-cell title="银行地址" :value="x.sbankName"></mt-cell>
         <mt-cell title="成交金额" :value="x.amount"></mt-cell>
         <mt-cell title="成交时间" :value="x.buyDateStr"></mt-cell>
-      </div>
-      <div class="btn" v-if="showBtn">
-        <mt-button @click.native="sureBuy">确认买入</mt-button>
+        <div class="btn" v-if="showBtn(x.status)">
+          <mt-button @click.native="sureBuy(x.id)">确认买入</mt-button>
+        </div>
+        <!-- <mt-cell title="成交状态" :value="x.status|filterStatus"></mt-cell> -->
       </div>
     </template>
     <noneImg v-else></noneImg>
@@ -43,6 +44,7 @@ export default {
   components: {
     noneImg: () => import("@components/noneImg")
   },
+
   mounted() {
     this.getData();
   },
@@ -58,27 +60,27 @@ export default {
           }
         });
     },
-    sureBuy() {
-      this.$api.tobuyordersure({
-        detailId:this.this.$route.query.parentId
-      }).then(res=>{
-        if (res.error_code == "0") {
-            this.orderList = res.data;
+    sureBuy(id) {
+      this.$api
+        .tobuyordersure({
+          detailId: id
+        })
+        .then(res => {
+          if (res.error_code == "0") {
+            this.$toast('成功支付！~');
+            this.getData();
           }
-      })
+        });
+    },
+    showBtn(status) {
+      if(status==1) return true
+      else return false
     }
   },
   computed: {
     ...mapGetters(["loading"]),
-    showBtn() {
-      let orderList = this.orderList;
-      //是否所有买家都已付款
-      let isB = orderList.every(y => {
-        return y.status == 2;
-      });
-      return !isB;
-    }
-  },
+    
+  }
 };
 </script>
 

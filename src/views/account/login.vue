@@ -6,8 +6,9 @@
     <div class="login-box">
       <div class="filed" @keyup.enter="login">
         <mt-field placeholder="用户名/邮箱/手机号" v-model.trim="mobilePhone"></mt-field>
-        <mt-field placeholder="请输入密码" type="password" v-model.trim="password">
-          <span class="iconfont icondizhi"></span>
+        <mt-field placeholder="请输入密码" :type="passwordType" v-model.trim="password">
+          <span class="iconfont icon-eyeclose" v-if="passwordType=='password'" @click="passwordType='text'"></span>
+           <span class="iconfont icon-eye" v-if="passwordType=='text'" @click="passwordType='password'"></span>
           <span class="f-password">忘记密码</span>
         </mt-field>
         <mt-field placeholder="请输入验证码" v-model="validCode">
@@ -26,6 +27,7 @@
 export default {
   data() {
     return {
+      passwordType:'password',
       password: "",
       mobilePhone: "",
       validCode: "",
@@ -84,6 +86,7 @@ export default {
     padding-left: 20px;
     color: #5e5e5e;
     position: relative;
+    display: inline-block;
     &:before {
       content: "";
       position: absolute;

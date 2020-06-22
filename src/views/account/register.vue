@@ -58,6 +58,12 @@ export default {
     };
   },
   components: {},
+  mounted() {
+    let invitecode = this.$route.query.invitecode;
+    if (invitecode != null) {
+      this.beInviteCode = invitecode;
+    }
+  },
   methods: {
     reset() {
       this.$messagebox

@@ -17,7 +17,7 @@
       </div>
       <div class="warn">
         <div class="tit">提示：</div>
-        <div class="cont">排单每1000元需消耗1个学点数，您当前学点数数量为:0</div>
+        <div class="cont">排单每1000元需消耗1个学点数，您当前学点数数量为:{{studyCoin}}</div>
       </div>
       <div class="btn">
         <mt-button :disabled="isDisabled" @click.native="buy">确认买入</mt-button>
@@ -35,6 +35,7 @@ export default {
     return {
       showPicker: false,
       curVal: null,
+      studyCoin:0,
       slots: [
         {
           flex: 1,
@@ -54,6 +55,7 @@ export default {
   },
   mounted() {
     this.getData();
+    this.userwallet();
   },
   methods: {
     getData() {
@@ -75,6 +77,13 @@ export default {
           });
           this.slots[0].values = list;
         }
+      });
+    },
+    userwallet() {
+      this.$api.userwallet({}).then(res => {
+         if (res.error_code == "0") {
+           this.studyCoin = res.data.studyCoin;
+         }
       });
     },
     buy() {

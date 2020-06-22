@@ -20,45 +20,7 @@ const cookieToken = Vue.prototype.$GLOBAL.TOKEN;
 const cookieRefreshToken = Vue.prototype.$GLOBAL.REFRESHTOKEN;
 const tokenTime = Vue.prototype.$GLOBAL.TOKENTIME;
 
-// /**
-//  * 清空 cookie
-//  */
-// const clearToken = () => {
-//   Vue.cookie.delete(cookieToken);
-//   Vue.cookie.delete(cookieRefreshToken);
-// }
 
-// /**
-//  * 获取 token
-//  */
-// const getToken = async () => {
-//   // 从cookie中获取token
-//   let token = Vue.cookie.get(cookieToken);
-//   // 如果token失效，则重新获取
-//   if (!token) {
-//     return await http.get('/getToken').then(res => {
-//       if (res.code == '0') {
-//         // 重置token
-//         Vue.cookie.set(cookieToken, res.data, { expires: tokenTime / 2 + 'm' });
-//         Vue.cookie.set(cookieRefreshToken, res.data, { expires: tokenTime + 'm' });
-//         return  res.data
-//       } else {
-//         // 清空cookie
-//         clearToken()
-//         // 跳转到登录页
-//         router.push('/login')
-//         Message.error('token失效，请重新登录 !')
-//       }
-//     }).catch(err => {
-//       // 清空cookie
-//       clearToken()
-//       // 跳转到登录页
-//       router.push('/login')
-//       Message.error('token失效，请重新登录 !')
-//     })
-//   } 
-//    return token
-// }
 
 /**
  * 请求拦截

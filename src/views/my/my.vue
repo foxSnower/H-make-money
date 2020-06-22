@@ -6,7 +6,7 @@
     <div class="my-hd" @click="$router.push('/myInfo')">
       <img src="@assets/hot-sell.png" />
       <p class="hd-title">{{info.mobile}}</p>
-      <p class="hd-subtitle">微信号:{{info.wechat}}</p>
+      <p class="hd-subtitle" v-if="info.wechat">微信号:{{info.wechat}}</p>
       <i class="allow-right"></i>
     </div>
     <div class="cell-box">
@@ -33,12 +33,13 @@
     <div class="btn">
       <mt-button @click.native="$router.push('/login')">退出登录</mt-button>
     </div>
-    <Footer curPage="我的"></Footer>
+    <Footer curPage="个人中心"></Footer>
   </div>
 </template>
 
 <script>
 export default {
+  name:'my',
   data() {
     return {
       info: {}

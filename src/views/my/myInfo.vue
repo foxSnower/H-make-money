@@ -21,6 +21,7 @@
 
 <script>
 export default {
+  name:'myInfo',
   data() {
     return {
       loading: false,

@@ -1,6 +1,9 @@
 <template>
   <div id="app" style="height: 100vh; overflow-x: hidden">
-    <router-view />
+    <keep-alive include="my,myInfo,qrcode" v-if="isLoggedIn">
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive||!isLoggedIn"></router-view>
     <mt-spinner class="loading" color="#2897fe" v-show="loading" type="double-bounce"></mt-spinner>
   </div>
 </template>
@@ -9,8 +12,23 @@
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "App",
-  components: {
-    
+  data() {
+    return {
+      isLoggedIn: false
+    };
+  },
+  components: {},
+  watch: {
+    $route(to, from) {
+      // if the route changes...
+      let token = this.$cookie.get('token') || "";
+      if (token) {
+        // firebase returns null if user logged out
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    }
   },
   computed: {
     ...mapGetters(["loading"])

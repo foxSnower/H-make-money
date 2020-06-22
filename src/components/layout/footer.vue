@@ -1,20 +1,20 @@
 <template>
   <div style="height:70px;">
-    <mt-tabbar v-model="selected">
-      <mt-tab-item id="首页" @click.native="goTo(selected)">
-        <img slot="icon" v-if="selected=='首页'" src="@assets/index-active.png" />
+    <mt-tabbar v-model="titleText">
+      <mt-tab-item id="首页" @click.native="goTo('index')">
+        <img slot="icon" v-if="curPage=='首页'" src="@assets/index-active.png" />
         <img slot="icon" v-else src="@assets/index-normal.png" />
         首页
       </mt-tab-item>
-      <mt-tab-item id="二维码" @click.native="goTo(selected)">
-        <img slot="icon" v-if="selected=='二维码'" src="@assets/qr-code-active.png" />
+      <mt-tab-item id="二维码" @click.native="goTo('qrcode')">
+        <img slot="icon" v-if="curPage=='二维码'" src="@assets/qr-code-active.png" />
         <img slot="icon" v-else src="@assets/qr-code-normal.png" />
         二维码
       </mt-tab-item>
-      <mt-tab-item id="我的" @click.native="goTo(selected)">
-        <img slot="icon" v-if="selected=='我的'" src="@assets/my-active.png" />
+      <mt-tab-item id="个人中心" @click.native="goTo('my')">
+        <img slot="icon" v-if="curPage=='个人中心'" src="@assets/my-active.png" />
         <img slot="icon" v-else src="@assets/my-normal.png" />
-        我的
+        个人中心
       </mt-tab-item>
     </mt-tabbar>
   </div>
@@ -24,7 +24,7 @@
 export default {
   data() {
     return {
-      selected: "首页"
+      titleText: "首页"
     };
   },
   props: {
@@ -33,15 +33,20 @@ export default {
       default: "首页"
     }
   },
+  watch: {
+    $route() {
+      console.log(this.$route.meta.title);
+      this.titleText =this.$route.meta.title
+    },
+  },
   mounted() {
-    this.selected = this.curPage;
+    this.titleText = this.curPage;
   },
   methods: {
-    goTo(selected) {
-      console.log(selected)
-      if (selected == "首页") this.$router.push("/index");
-      if (selected == "二维码") this.$router.push("/qrcode");
-      if (selected == "我的") this.$router.push("/my");
+    goTo(name) {
+      this.$router.push({
+        path: name
+      });
     }
   }
 };

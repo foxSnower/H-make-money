@@ -38,8 +38,9 @@
             class="f-filed"
             placeholder="请输入提现金额"
             v-model="amount"
-            @focus.native.capture="filterAmount(amount)"
-            @blur.native.capture="filterAmount(amount)"
+            :type="inputType"
+            @focus.native.capture="focusAmount(amount);inputType='number';"
+            @blur.native.capture="blurAmount(amount);inputType='text';"
           ></mt-field>
         </div>
       </div>
@@ -50,7 +51,7 @@
 
       <div class="btn f-flex-box">
         <mt-button class="default" @click.native="$router.go(-1)">取消</mt-button>
-        <mt-button class="f-flex" :disabled="isDisabled" @click.native="register">立即卖出</mt-button>
+        <mt-button class="f-flex" :disabled="isDisabled" @click.native="sell">立即卖出</mt-button>
       </div>
     </div>
     <transition name="slide-fade">
@@ -63,7 +64,8 @@
 export default {
   data() {
     return {
-      amount: null,
+      amount: "",
+      inputType: "text",
       wallet: {},
       showPicker: false,
       curVal: null,
@@ -91,22 +93,31 @@ export default {
         }
       });
     },
-    filterAmount(amount) {
-      console.log(amount,amount.indexOf("￥"));
-      if (amount.indexOf("￥") > -1) {
-        this.amount = parseFloat(amount.split("￥")[1]);
+    //失去焦点
+    blurAmount(amount) {
+      if (amount == "") {
+        this.amount = "";
       } else {
         this.amount = "￥" + parseFloat(amount);
       }
     },
-    buy() {
+    //获取焦点
+    focusAmount(amount) {
+      if (amount == "") {
+        this.amount = "";
+      } else {
+        this.amount = this.amount.split("￥")[1];
+      }
+    },
+    sell() {
       this.$api
-        .tobuy({
-          productId: this.curVal.id
+        .tosell({
+          type: this.curVal == "静态钱包" ? 1 : 2,
+          amount: parseFloat(this.amount.split("￥")[1])
         })
         .then(res => {
           if (res.error_code == "0") {
-            this.$router.replace("./buyRecordDetail");
+            this.$router.replace("./sellRecord");
           }
         });
     }
@@ -114,7 +125,12 @@ export default {
   computed: {
     isDisabled() {
       let curVal = this.curVal;
-      if (this.curVal != "" && this.curVal != null) {
+      if (
+        this.curVal != "" &&
+        this.curVal != null &&
+        this.amount != "" &&
+        parseFloat(this.amount.split("￥")[1]) != 0
+      ) {
         return false;
       } else {
         return true;
@@ -173,7 +189,6 @@ export default {
       }
       .f-filed {
         position: absolute;
-        width: 100px;
         right: 20px;
         top: 0;
         /deep/ .mint-cell-wrapper {

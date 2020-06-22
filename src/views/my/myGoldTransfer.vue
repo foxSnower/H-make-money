@@ -8,13 +8,13 @@
       <img src="@assets/wallet-income.png" />
       <div class="text">
         <p class="tit">学点转让</p>
-        <p class="num">10</p>
+        <p class="num">{{studyCoin}}</p>
       </div>
     </div>
     <div class="field">
       <mt-field label="转出账户:" placeholder="请输入转出账户号" type="tel" v-model="toMobile"></mt-field>
       <mt-field label="输入数量:" placeholder="请输入排单币数量" type="number" v-model="amount"></mt-field>
-      <div class="filed-tip">学点币不足</div>
+      <div class="filed-tip" v-if="studyCoin<amount">学点币不足</div>
     </div>
     <div class="warn">
       <div class="tit">提示：</div>
@@ -27,13 +27,13 @@
       <div class="f-flex-box hd">
         <div class="f-flex">会员编号</div>
         <div class="f-flex">数量</div>
-        <div class="f-flex">时间</div>
+        <div class="f-flex hd-time">时间</div>
       </div>
       <template v-if="recordList.length!=0">
         <div class="f-flex-box" v-for="x in recordList" :key="x.id">
           <div class="f-flex">{{x.referUserMobile}}</div>
           <div class="f-flex">{{x.amount}}</div>
-          <div class="time">{{x.createDate}}</div>
+          <div class="f-flex time">{{x.createDate}}</div>
         </div>
       </template>
     </div>
@@ -45,6 +45,7 @@
 export default {
   data() {
     return {
+      studyCoin: 0,
       recordList: [],
       toMobile: "",
       amount: null
@@ -56,10 +57,24 @@ export default {
   },
   methods: {
     getData() {
+      this.userwallet(() => {
+        this.getRecord();
+      });
+    },
+    getRecord(fn) {
       //获取转让记录
       this.$api.studycoinexchangerecord({}).then(res => {
         if (res.error_code == 0) {
           this.recordList = res.data;
+          fn();
+        }
+      });
+    },
+    userwallet(fn) {
+      this.$api.userwallet({}).then(res => {
+        if (res.error_code == "0") {
+          this.studyCoin = res.data.studyCoin;
+          fn();
         }
       });
     },
@@ -80,7 +95,7 @@ export default {
   },
   computed: {
     isDisabled() {
-      if (this.toMobile != "" && this.amount != null) {
+      if (this.toMobile != "" && this.amount != null && this.amount != "") {
         return false;
       } else {
         return true;
@@ -139,12 +154,15 @@ export default {
       padding: 15px 10px;
       font-size: 16px;
     }
-    .f-flex,
-    .time {
+    .hd-time {
+      min-width: 120px;
+    }
+    .f-flex {
       text-align: center;
     }
     .time {
       font-size: 12px;
+      min-width: 120px;
     }
   }
 }

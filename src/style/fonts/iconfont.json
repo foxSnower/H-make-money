@@ -1,0 +1,23 @@
+{
+  "id": "1900611",
+  "name": "hanlinyuan",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3544528",
+      "name": "eye close",
+      "font_class": "eyeclose",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "3928405",
+      "name": "eye",
+      "font_class": "eye",
+      "unicode": "e6b7",
+      "unicode_decimal": 59063
+    }
+  ]
+}

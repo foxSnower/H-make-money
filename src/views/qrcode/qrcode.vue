@@ -24,6 +24,7 @@
 import QRCode from "qrcodejs2";
 
 export default {
+  name:'qrcode',
   data() {
     return {
       qrUrl: ""
@@ -39,7 +40,7 @@ export default {
     getData() {
       this.$api.selfinfo({}).then(res => {
         if (res.error_code == "0") {
-          this.qrUrl = window.location.origin + "?invitecode=" + res.data.inviteCode;
+          this.qrUrl = window.location.origin + "/#/register?invitecode=" + res.data.inviteCode;
           this.creatQrCode(this.qrUrl);
         }
       });

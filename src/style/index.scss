@@ -10,6 +10,8 @@
 body{
   color:#fff;
   font-size: 14px;
+  // background-color: #191D26;
+  height:100vh;
   background: linear-gradient(#191D26,#232730);
   font-family:'Microsoft YaHei,SimSun';;
 }
@@ -49,7 +51,7 @@ body{
 .btn {
   padding: 10px 15px;
   // background-color: #fff;
-  /deep/ .mint-button {
+  .mint-button {
     width: 100%;
     border-radius: 50px;
     background: linear-gradient(to right, #53CEF8, #38B1F1);
@@ -80,7 +82,7 @@ body{
     font-size: 12px;
     margin-left: 75px;
   }
-  /deep/ .mint-cell-value{
+  .mint-cell-value{
     position: relative;
     border: 2px solid;
     border-image: linear-gradient(to right, #53CEF8, #38B1F1) 10 10;
@@ -88,10 +90,10 @@ body{
     padding: 4px;
     margin-left: 5px;
   }
-  /deep/ .mint-cell-title{
+  .mint-cell-title{
     width: 70px;
   }
-  /deep/ .mint-cell-wrapper{
+  .mint-cell-wrapper{
     border:none;
   }
   input{
@@ -100,6 +102,11 @@ body{
   input::-webkit-input-placeholder{
     color:#5E5E5E;
     font-size: 12px;
+  }
+}
+.b-none{
+  .mint-cell-wrapper{
+    border:none;
   }
 }
 
