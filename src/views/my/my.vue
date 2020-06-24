@@ -4,7 +4,7 @@
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     <div class="my-hd" @click="$router.push('/myInfo')">
-      <img src="@assets/hot-sell.png" />
+      <img src="@assets/logo.png" />
       <p class="hd-title">{{info.mobile}}</p>
       <p class="hd-subtitle" v-if="info.wechat">微信号:{{info.wechat}}</p>
       <i class="allow-right"></i>

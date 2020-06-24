@@ -7,7 +7,7 @@
     <div class="cell-box">
       <mt-cell title="头像" is-link>
         <span class="img">
-          <img src="@assets/hot-sell.png" />
+          <img src="@assets/logo.png" />
         </span>
       </mt-cell>
       <mt-cell title="账号" is-link :value="info.mobile"></mt-cell>

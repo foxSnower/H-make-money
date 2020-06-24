@@ -4,7 +4,7 @@
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     <div class="qr-box">
-      <img class="logo-img" src="@assets/hot-sell.png" />
+      <img class="logo-img" src="@assets/logo.png" />
       <img class="qr-box-img" src="@assets/qr-code.png" />
       <div class="qr-code" ref="qrCodeUrl"></div>
       <div class="text">邀请好友，一起分享吧~</div>

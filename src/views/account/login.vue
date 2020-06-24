@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="img">
-      <!-- <img src="@assets/sell-record.png" alt /> -->
+      <img src="@assets/logo.png" alt="图片加载失败" />
     </div>
     <div class="login-box">
       <div class="filed" @keyup.enter="login">

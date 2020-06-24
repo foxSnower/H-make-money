@@ -12,8 +12,8 @@
       </div>
     </div>
     <div class="field">
-      <mt-field label="转出账户:" placeholder="请输入转出账户号" type="tel" v-model="toMobile"></mt-field>
-      <mt-field label="输入数量:" placeholder="请输入排单币数量" type="number" v-model="amount"></mt-field>
+      <mt-field label="转入账户:" placeholder="请输入转出账户号" type="tel" v-model="toMobile"></mt-field>
+      <mt-field label="输入数量:" placeholder="请输入学点数量" type="number" v-model="amount"></mt-field>
       <div class="filed-tip" v-if="studyCoin<amount">学点币不足</div>
     </div>
     <div class="warn">
