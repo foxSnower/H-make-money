@@ -22,7 +22,7 @@
         <mt-cell title="银行账号" :value="x.sbankCardNo"></mt-cell>
         <mt-cell title="银行地址" :value="x.sbankName"></mt-cell>
         <mt-cell title="成交金额" :value="x.amount"></mt-cell>
-        <mt-cell title="成交时间" :value="x.buyDateStr"></mt-cell>
+        <mt-cell title="成交时间" :value="x.completeDateStr"></mt-cell>
         <div class="btn" v-if="showBtn(x.status)">
           <mt-button @click.native="sureBuy(x.id)">确认买入</mt-button>
         </div>

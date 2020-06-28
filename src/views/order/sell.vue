@@ -11,7 +11,7 @@
           <div class="f-flex tit">
             <img src="@assets/wallet-static.png" />静态钱包
           </div>
-          <div class="num">￥ {{wallet.staticCoin}}</div>
+          <div class="num">￥ {{wallet.availableStaticCoin}}</div>
         </div>
       </div>
       <div class="filed">
@@ -51,11 +51,20 @@
 
       <div class="btn f-flex-box">
         <mt-button class="default" @click.native="$router.go(-1)">取消</mt-button>
-        <mt-button class="f-flex" :disabled="isDisabled" @click.native="sell">立即卖出</mt-button>
+        <mt-button class="f-flex" :disabled="isDisabled" @click.native="showPassword=true">立即卖出</mt-button>
       </div>
     </div>
     <transition name="slide-fade">
       <Picker v-if="showPicker" :slots="slots" :curVal.sync="curVal" :showPicker.sync="showPicker"></Picker>
+    </transition>
+    <transition name="slide-fade">
+      <div class="pass" v-if="showPassword">
+        <mt-field label="二级密码" placeholder="请输入您的二级密码" type="password" v-model.trim="l2Password"></mt-field>
+        <div class="btn f-flex-box">
+          <mt-button class="default" @click.native="showPassword=false">取消</mt-button>
+          <mt-button class="f-flex" :disabled="isDisabledPass" @click.native="sell">确定</mt-button>
+        </div>
+      </div>
     </transition>
   </div>
 </template>
@@ -68,7 +77,9 @@ export default {
       inputType: "text",
       wallet: {},
       showPicker: false,
+      showPassword: false,
       curVal: null,
+      l2Password: "",
       slots: [
         {
           flex: 1,
@@ -113,9 +124,11 @@ export default {
       this.$api
         .tosell({
           type: this.curVal == "静态钱包" ? 1 : 2,
-          amount: parseFloat(this.amount.split("￥")[1])
+          amount: parseFloat(this.amount.split("￥")[1]),
+          l2Password:this.l2Password
         })
         .then(res => {
+          this.showPassword = false;
           if (res.error_code == "0") {
             this.$router.replace("./sellRecord");
           }
@@ -131,6 +144,13 @@ export default {
         this.amount != "" &&
         parseFloat(this.amount.split("￥")[1]) != 0
       ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    isDisabledPass(){
+       if (this.l2Password != "") {
         return false;
       } else {
         return true;
@@ -213,6 +233,23 @@ export default {
   }
 }
 
+.pass {
+  height: 180px;
+  position: fixed;
+  /* width: 100%; */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5%;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#303645),
+    to(#2b313f)
+  );
+  background: linear-gradient(#303645, #2b313f);
+}
 .btn {
   margin-top: 50px;
   .default {

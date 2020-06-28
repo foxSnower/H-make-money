@@ -7,7 +7,11 @@
       <img class="logo-img" src="@assets/logo.png" />
       <img class="qr-box-img" src="@assets/qr-code.png" />
       <div class="qr-code" ref="qrCodeUrl"></div>
-      <div class="text">邀请好友，一起分享吧~</div>
+      <div class="text" v-if="inviteCode">
+        我的推荐码：
+        <span>{{inviteCode}}</span>
+      </div>
+      <div class="text text2">邀请好友，一起分享吧~</div>
       <div class="btn">
         <mt-button @click.native="doCopy">
           <img src="@assets/share.png" height="20" width="20" slot="icon" />
@@ -24,9 +28,10 @@
 import QRCode from "qrcodejs2";
 
 export default {
-  name:'qrcode',
+  name: "qrcode",
   data() {
     return {
+      inviteCode: "",
       qrUrl: ""
     };
   },
@@ -40,7 +45,11 @@ export default {
     getData() {
       this.$api.selfinfo({}).then(res => {
         if (res.error_code == "0") {
-          this.qrUrl = window.location.origin + "/#/register?invitecode=" + res.data.inviteCode;
+          this.inviteCode = res.data.inviteCode;
+          this.qrUrl =
+            window.location.origin +
+            "/#/register?invitecode=" +
+            res.data.inviteCode;
           this.creatQrCode(this.qrUrl);
         }
       });
@@ -81,8 +90,6 @@ export default {
     position: absolute;
     width: 80px;
     height: 80px;
-    border-radius: 80px;
-    /* text-align: center; */
     top: -40px;
     left: 50%;
     margin-left: -40px;
@@ -95,7 +102,7 @@ export default {
     position: absolute;
     width: 55%;
     height: 35%;
-    top: 24%;
+    top: 23.5%;
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
@@ -112,6 +119,12 @@ export default {
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
+    span {
+      color: #2897fe;
+    }
+    &.text2 {
+      top: 67%;
+    }
   }
   .btn {
     position: absolute;

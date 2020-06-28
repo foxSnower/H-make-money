@@ -21,7 +21,7 @@
         </div>
         <div class="bd">
           <span class="tit">日期：</span>
-          <span>{{x.orderDate}}</span>
+          <span>{{x.orderDateStr}}</span>
         </div>
         <div class="bd">
           <span class="tit">已配：</span>
