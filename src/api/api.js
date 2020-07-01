@@ -114,6 +114,8 @@ const api = {
   
   //直推体系
   relationnum(params) { return comAPI('post', system + '/relation/relationnum', params) },
+  //公告
+  systemnotice(params) { return comAPI('post', system + '/system/systemnotice', params) },
   
 
   

@@ -10,7 +10,7 @@
           <span class="tit">参与者：</span>
           <span>{{x.bname}}</span>
           <span
-            v-if="x.status==2"
+            v-if="x.status==2||x.status==0"
             class="detail"
             @click="$router.push('./buyRecordDetail?parentId='+ x.id)"
           >查看详情</span>

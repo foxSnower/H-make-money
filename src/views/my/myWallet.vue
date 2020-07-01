@@ -8,7 +8,7 @@
       <img src="@assets/wallet-income.png" />
       <div class="text">
         <p class="tit">总收入</p>
-        <p class="num">￥{{data.studyCoin}}</p>
+        <p class="num">￥{{data.totalBuyOrderAmount}}</p>
       </div>
     </div>
     <div class="f-flex-box">

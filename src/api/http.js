@@ -29,6 +29,7 @@ http.interceptors.request.use(async request => {
   //显示loading
   store.commit('loading', true);
   //添加 Authorization
+ 
   switch (request.url) {
     // 不需要任何Authorization的API
     case '/secret/register':
